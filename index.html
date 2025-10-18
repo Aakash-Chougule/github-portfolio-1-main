@@ -5,6 +5,24 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Aakash Chougule | ASP.NET Developer</title>
+  
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="Aakash Chougule - ASP.NET Developer specializing in modern web applications, C#, and full-stack development. View my portfolio and projects.">
+  <meta name="keywords" content="ASP.NET Developer, C#, Web Development, Portfolio, Full Stack Developer, ASP.NET MVC, Web API">
+  <meta name="author" content="Aakash Chougule">
+  <meta name="robots" content="index, follow">
+
+  <!-- Open Graph Tags -->
+  <meta property="og:title" content="Aakash Chougule | ASP.NET Developer">
+  <meta property="og:description" content="Professional ASP.NET Developer Portfolio - Building modern, responsive web applications">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://aakashchougule.com">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Aakash Chougule | ASP.NET Developer">
+  <meta name="twitter:description" content="Professional ASP.NET Developer Portfolio">
+
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
@@ -16,6 +34,8 @@
       --primary: #2980b9;
       --secondary: #2c2c2c;
       --highlight: #e74c3c;
+      --success: #28a745;
+      --error: #e74c3c;
     }
 
     body.light-mode {
@@ -28,6 +48,12 @@
 
     * {
       box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
     }
 
     body {
@@ -35,8 +61,20 @@
       font-family: 'Roboto', sans-serif;
       background-color: var(--bg);
       color: var(--text);
-      scroll-behavior: smooth;
       transition: background 0.3s, color 0.3s;
+      overflow-x: hidden;
+    }
+
+    /* Loading Spinner */
+    .spinner {
+      animation: spin 1s linear infinite;
+      display: inline-block;
+      margin-right: 8px;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
     }
 
     header,
@@ -45,6 +83,8 @@
       color: white;
       text-align: center;
       padding: 4rem 1rem;
+      position: relative;
+      overflow: hidden;
     }
 
     .profile-header .container {
@@ -71,6 +111,7 @@
     .profile-text h1 {
       margin: 0;
       font-size: 2rem;
+      min-height: 2.4rem;
     }
 
     .profile-text p {
@@ -96,10 +137,15 @@
       text-decoration: none;
       color: var(--text);
       font-weight: bold;
+      transition: color 0.3s ease;
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
     }
 
+    nav a:hover,
     nav a.active {
       color: var(--highlight);
+      background: rgba(231, 76, 60, 0.1);
     }
 
     .toggle-btn {
@@ -113,6 +159,11 @@
       border-radius: 5px;
       cursor: pointer;
       z-index: 1000;
+      transition: transform 0.3s ease;
+    }
+
+    .toggle-btn:hover {
+      transform: scale(1.05);
     }
 
     section {
@@ -131,6 +182,34 @@
 
     .projects h2 {
       text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    /* Project Filters */
+    .project-filters {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .filter-btn {
+      padding: 0.5rem 1.5rem;
+      border: 2px solid var(--primary);
+      background: transparent;
+      color: var(--text);
+      border-radius: 25px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-weight: 600;
+    }
+
+    .filter-btn:hover,
+    .filter-btn.active {
+      background: var(--primary);
+      color: white;
+      transform: translateY(-2px);
     }
 
     .project-grid {
@@ -146,8 +225,19 @@
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
       overflow: hidden;
       padding: 1rem;
-      transition: transform 0.4s ease, box-shadow 0.4s ease;
+      transition: all 0.4s ease;
       text-align: center;
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .projects .card.hidden {
+      display: none;
+    }
+
+    .projects .card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
     }
 
     .projects .card img {
@@ -156,11 +246,26 @@
       object-fit: cover;
       border-radius: 8px;
       margin-bottom: 1rem;
+      transition: transform 0.3s ease;
     }
 
-    .projects .card:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    .projects .card:hover img {
+      transform: scale(1.05);
+    }
+
+    .card a {
+      display: inline-block;
+      margin-top: 1rem;
+      padding: 0.5rem 1rem;
+      background: var(--primary);
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+      transition: background 0.3s ease;
+    }
+
+    .card a:hover {
+      background: var(--highlight);
     }
 
     .skills {
@@ -183,6 +288,11 @@
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
       text-align: center;
       width: 160px;
+      transition: transform 0.3s ease;
+    }
+
+    .skill-box:hover {
+      transform: translateY(-5px);
     }
 
     .bar-container {
@@ -196,28 +306,81 @@
     .bar-fill {
       height: 100%;
       background: var(--primary);
-      width: var(--value);
-      transition: width 0.5s;
+      width: 0;
+      transition: width 1.5s ease-in-out;
+    }
+
+    /* Enhanced Form Styles */
+    .form-group {
+      margin-bottom: 1.5rem;
+      position: relative;
     }
 
     form input,
     form textarea {
       width: 100%;
-      padding: 0.5rem;
-      margin-bottom: 1rem;
-      border: 1px solid #ccc;
+      padding: 0.75rem;
+      border: 2px solid #ccc;
       border-radius: 5px;
       background-color: var(--secondary);
       color: var(--text);
+      transition: all 0.3s ease;
+      font-family: inherit;
+    }
+
+    form input:focus,
+    form textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+    }
+
+    .form-group.success input,
+    .form-group.success textarea {
+      border-color: var(--success);
+    }
+
+    .form-group.error input,
+    .form-group.error textarea {
+      border-color: var(--error);
+    }
+
+    .error-message {
+      color: var(--error);
+      font-size: 0.875rem;
+      margin-top: 0.25rem;
+      display: none;
+    }
+
+    .form-group.error .error-message {
+      display: block;
     }
 
     form button {
-      padding: 0.5rem 1rem;
+      padding: 0.75rem 2rem;
       background: var(--highlight);
       color: white;
       border: none;
       border-radius: 5px;
       cursor: pointer;
+      font-size: 1rem;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+
+    form button:hover:not(:disabled) {
+      background: #c0392b;
+      transform: translateY(-2px);
+    }
+
+    form button:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+      transform: none;
     }
 
     #backToTop {
@@ -226,10 +389,18 @@
       right: 30px;
       background: var(--primary);
       color: white;
-      padding: 10px 15px;
+      padding: 12px 15px;
       border: none;
-      border-radius: 5px;
+      border-radius: 50%;
+      cursor: pointer;
       display: none;
+      transition: all 0.3s ease;
+      z-index: 99;
+    }
+
+    #backToTop:hover {
+      background: var(--highlight);
+      transform: translateY(-3px);
     }
 
     footer {
@@ -249,14 +420,45 @@
     .social-icons a {
       color: var(--text);
       font-size: 1.8rem;
-      transition: color 0.3s ease, transform 0.3s ease;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: var(--bg);
     }
 
     .social-icons a:hover {
       color: var(--highlight);
       transform: scale(1.2);
+      background: var(--secondary);
     }
 
+    /* Success Popup */
+    #successPopup {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: var(--success);
+      color: white;
+      padding: 1.5rem 2rem;
+      border-radius: 10px;
+      font-size: 1.2rem;
+      z-index: 10000;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      animation: popIn 0.5s ease;
+    }
+
+    @keyframes popIn {
+      0% { transform: translate(-50%, -50%) scale(0.8); opacity: 0; }
+      100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+    }
+
+    /* Responsive Design */
     @media (max-width: 768px) {
       .profile-header {
         padding: 2rem 1rem;
@@ -270,24 +472,61 @@
       nav {
         flex-direction: column;
         align-items: center;
+        gap: 0.5rem;
       }
 
       .skill-box {
         width: 100%;
         max-width: 300px;
       }
+
+      section {
+        padding: 3rem 1rem;
+      }
+
+      .project-filters {
+        gap: 0.5rem;
+      }
+
+      .filter-btn {
+        padding: 0.4rem 1rem;
+        font-size: 0.9rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .profile-text h1 {
+        font-size: 1.5rem;
+      }
+
+      .profile-text p {
+        font-size: 1rem;
+      }
+
+      .toggle-btn {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.9rem;
+      }
+
+      #backToTop {
+        padding: 10px 12px;
+        bottom: 20px;
+        right: 20px;
+      }
     }
   </style>
 </head>
 
 <body>
-  <button class="toggle-btn" onclick="toggleDarkMode()">Toggle Theme</button>
+  <button class="toggle-btn" onclick="toggleDarkMode()">
+    <i class="fas fa-palette"></i> Theme
+  </button>
 
   <header class="profile-header">
     <div class="container">
       <img src="resources/images/profile_photo.jpeg" alt="Aakash Chougule" class="profile-pic" />
       <div class="profile-text">
-        <h1>Aakash Chougule</h1>
+        <h1 id="typewriter"></h1>
         <p>Fresher | ASP.NET Developer</p>
       </div>
     </div>
@@ -309,12 +548,24 @@
       <p>🚀 Currently seeking opportunities to grow and contribute to real-world projects while leveling up as a full-stack developer.</p>
     </div>
     <div class="social-icons">
-      <a href="https://github.com/Aakash-Chougule" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
-      <a href="https://www.linkedin.com/in/aakash-chougule-031524186/" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
-      <a href="mailto:aakashc549@gmail.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
-      <a href="https://stackoverflow.com/users/17657836/aakash-chougule" target="_blank" aria-label="Stack Overflow"><i class="fab fa-stack-overflow"></i></a>
-      <a href="https://www.hackerrank.com/profile/aakashc549" target="_blank" aria-label="HackerRank"><i class="fab fa-hackerrank"></i></a>
-      <a href="resources/Documents/Aakash_chougule_Resume.pdf" download aria-label="Download CV"><i class="fas fa-file-download"></i></a>
+      <a href="https://github.com/Aakash-Chougule" target="_blank" aria-label="GitHub">
+        <i class="fab fa-github"></i>
+      </a>
+      <a href="https://www.linkedin.com/in/aakash-chougule-031524186/" target="_blank" aria-label="LinkedIn">
+        <i class="fab fa-linkedin"></i>
+      </a>
+      <a href="mailto:aakashc549@gmail.com" aria-label="Email">
+        <i class="fas fa-envelope"></i>
+      </a>
+      <a href="https://stackoverflow.com/users/17657836/aakash-chougule" target="_blank" aria-label="Stack Overflow">
+        <i class="fab fa-stack-overflow"></i>
+      </a>
+      <a href="https://www.hackerrank.com/profile/aakashc549" target="_blank" aria-label="HackerRank">
+        <i class="fab fa-hackerrank"></i>
+      </a>
+      <a href="resources/Documents/Aakash_chougule_Resume.pdf" download aria-label="Download CV" id="resumeDownload">
+        <i class="fas fa-file-download"></i>
+      </a>
     </div>
   </section>
 
@@ -323,85 +574,115 @@
     <div class="skill-list">
       <div class="skill-box">
         <h4>HTML</h4>
-        <div class="bar-container"><div class="bar-fill" style="--value: 90%; width: 90%;"></div></div>
+        <div class="bar-container">
+          <div class="bar-fill" data-width="90%"></div>
+        </div>
       </div>
       <div class="skill-box">
         <h4>CSS</h4>
-        <div class="bar-container"><div class="bar-fill" style="--value: 85%; width: 85%;"></div></div>
+        <div class="bar-container">
+          <div class="bar-fill" data-width="85%"></div>
+        </div>
       </div>
       <div class="skill-box">
         <h4>JavaScript</h4>
-        <div class="bar-container"><div class="bar-fill" style="--value: 80%; width: 80%;"></div></div>
+        <div class="bar-container">
+          <div class="bar-fill" data-width="80%"></div>
+        </div>
       </div>
       <div class="skill-box">
         <h4>C#</h4>
-        <div class="bar-container"><div class="bar-fill" style="--value: 85%; width: 85%;"></div></div>
+        <div class="bar-container">
+          <div class="bar-fill" data-width="85%"></div>
+        </div>
       </div>
       <div class="skill-box">
         <h4>ASP.NET (Windows Forms)</h4>
-        <div class="bar-container"><div class="bar-fill" style="--value: 80%; width: 80%;"></div></div>
+        <div class="bar-container">
+          <div class="bar-fill" data-width="80%"></div>
+        </div>
       </div>
       <div class="skill-box">
         <h4>ASP.NET (Web Application)</h4>
-        <div class="bar-container"><div class="bar-fill" style="--value: 80%; width: 80%;"></div></div>
+        <div class="bar-container">
+          <div class="bar-fill" data-width="80%"></div>
+        </div>
       </div>
       <div class="skill-box">
         <h4>ASP.NET MVC</h4>
-        <div class="bar-container"><div class="bar-fill" style="--value: 80%; width: 80%;"></div></div>
+        <div class="bar-container">
+          <div class="bar-fill" data-width="80%"></div>
+        </div>
       </div>
       <div class="skill-box">
         <h4>ASP.NET Web API</h4>
-        <div class="bar-container"><div class="bar-fill" style="--value: 75%; width: 75%;"></div></div>
+        <div class="bar-container">
+          <div class="bar-fill" data-width="75%"></div>
+        </div>
       </div>
       <div class="skill-box">
         <h4>Microsoft SQL</h4>
-        <div class="bar-container"><div class="bar-fill" style="--value: 75%; width: 75%;"></div></div>
+        <div class="bar-container">
+          <div class="bar-fill" data-width="75%"></div>
+        </div>
       </div>
       <div class="skill-box">
         <h4>Laravel (MVC)</h4>
-        <div class="bar-container"><div class="bar-fill" style="--value: 40%; width: 40%;"></div></div>
+        <div class="bar-container">
+          <div class="bar-fill" data-width="40%"></div>
+        </div>
       </div>
       <div class="skill-box">
         <h4>Android (Java)</h4>
-        <div class="bar-container"><div class="bar-fill" style="--value: 75%; width: 75%;"></div></div>
+        <div class="bar-container">
+          <div class="bar-fill" data-width="75%"></div>
+        </div>
       </div>
     </div>
   </section>
 
   <section id="projects" class="projects">
     <h2>Projects</h2>
+    
+    <div class="project-filters">
+      <button class="filter-btn active" data-filter="all">All Projects</button>
+      <button class="filter-btn" data-filter="web">Web Apps</button>
+      <button class="filter-btn" data-filter="desktop">Desktop</button>
+      <button class="filter-btn" data-filter="mobile">Mobile</button>
+    </div>
+
     <div class="project-grid">
-      <div class="card">
+      <div class="card" data-category="web">
         <img src="resources/images/inventory_managemant.png" alt="Inventory System">
         <h3>Inventory Management System</h3>
         <p>ASP.NET based application to manage stock, sales, and purchase</p>
         <a href="https://github.com/Aakash-Chougule">View on GitHub</a>
       </div>
-      <div class="card">
+      <div class="card" data-category="desktop">
         <img src="resources/images/laxmi_traders.png" alt="Store System">
         <h3>Store Management System (Luxmi Traders)</h3>
         <p>Windows Forms app for local store inventory and sales management.</p>
         <a href="https://github.com/Aakash-Chougule">View on GitHub</a>
       </div>
-      <div class="card">
+      <div class="card" data-category="web">
         <img src="resources/images/cafe_coffee_bean.png" alt="Cafe Coffee Bean Website">
         <h3>Cafe Coffee Bean Website</h3>
         <p>HTML, CSS, and JS website for the coffee shop.</p>
         <a href="https://github.com/Aakash-Chougule">View on GitHub</a>
       </div>
-      <div class="card">
+      <div class="card" data-category="mobile">
         <img src="resources/images/dil_se_connect.png" alt="DilSeConnect Design">
         <h3>DilSeConnect App Design</h3>
         <p>UI design for a social connection app using Android Studio (Java).</p>
         <a href="https://github.com/Aakash-Chougule">View Details</a>
       </div>
-      <div class="card">
+      <div class="card" data-category="web">
         <img src="resources/images/vue_js.png" alt="Website Template">
         <h3>Vue.js Website Template</h3>
         <p>Responsive single-page template using Vue.js and Tailwind CSS.</p>
         <a href="https://github.com/Aakash-Chougule">View on GitHub</a>
       </div>
-      <div class="card">
+      <div class="card" data-category="web">
         <img src="resources/images/portfolio.png" alt="Portfolio Website">
         <h3>Portfolio Website</h3>
         <p>Fully responsive personal portfolio with dark mode and animations.</p>
@@ -413,130 +694,283 @@
   <section id="contact">
     <h2>Contact Me</h2>
     <form id="contactForm">
-      <input type="text" id="name" name="name" placeholder="Your Name" required />
-      <input type="email" id="email" name="email" placeholder="Your Email" required />
-      <textarea id="message" name="message" rows="5" placeholder="Your Message" required></textarea>
-      <button type="submit">Send Message</button>
+      <div class="form-group">
+        <input type="text" id="name" name="name" placeholder="Your Name" required />
+        <div class="error-message" id="nameError">Please enter a valid name (letters and spaces only)</div>
+      </div>
+      
+      <div class="form-group">
+        <input type="email" id="email" name="email" placeholder="Your Email" required />
+        <div class="error-message" id="emailError">Please enter a valid email address</div>
+      </div>
+      
+      <div class="form-group">
+        <textarea id="message" name="message" rows="5" placeholder="Your Message" required></textarea>
+        <div class="error-message" id="messageError">Message cannot be empty</div>
+      </div>
+      
+      <button type="submit" id="submitBtn">
+        <span id="buttonText">Send Message</span>
+      </button>
     </form>
   </section>
 
-  <div id="successPopup" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: #28a745; color: white; padding: 1rem 2rem; border-radius: 8px; font-size: 1.2rem; z-index: 10000;">
-    Your message has been sent to the developer!
+  <div id="successPopup">
+    <i class="fas fa-check-circle"></i> Your message has been sent successfully!
   </div>
 
   <footer>
     <p>&copy; 2025 Aakash Chougule | ASP.NET Developer</p>
   </footer>
 
-  <button id="backToTop" onclick="scrollToTop()">Back to Top</button>
+  <button id="backToTop" onclick="scrollToTop()">
+    <i class="fas fa-chevron-up"></i>
+  </button>
 
   <script>
-    // Initialize EmailJS with your public key
+    // Initialize EmailJS
     emailjs.init("2ebBAJBkDrupcL5F7");
-    
+
+    // DOM Elements
     const darkModeToggle = document.querySelector('.toggle-btn');
     const sections = document.querySelectorAll('section');
     const backToTopBtn = document.getElementById('backToTop');
-    
-    // EmailJS form handling
     const form = document.getElementById('contactForm');
     const nameField = document.getElementById('name');
     const emailField = document.getElementById('email');
     const messageField = document.getElementById('message');
     const successPopup = document.getElementById('successPopup');
+    const submitBtn = document.getElementById('submitBtn');
+    const buttonText = document.getElementById('buttonText');
+    const resumeDownload = document.getElementById('resumeDownload');
 
-    form.addEventListener('submit', function(event) {
-      // Prevent form submission to handle validation
-      event.preventDefault();
-      
-      let valid = true;
-
-      // Check if Name is filled and contains only letters
-      const namePattern = /^[A-Za-z\s]+$/;  // Name can only contain letters and spaces
-      if (nameField.value.trim() === '') {
-        valid = false;
-        alert('Name is required');
-      } else if (!namePattern.test(nameField.value.trim())) {
-        valid = false;
-        alert('Name can only contain letters and spaces');
-      }
-      
-      // Check if Email is filled and valid
-      const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-      if (emailField.value.trim() === '') {
-        valid = false;
-        alert('Email is required');
-      } else if (!emailPattern.test(emailField.value.trim())) {
-        valid = false;
-        alert('Please enter a valid email address');
-      }
-
-      // Check if Message is filled
-      if (messageField.value.trim() === '') {
-        valid = false;
-        alert('Message cannot be empty');
-      }
-      
-      // If all checks pass, send the email via EmailJS
-      if (valid) {
-        // Show loading state
-        const submitBtn = form.querySelector('button[type="submit"]');
-        const originalText = submitBtn.textContent;
-        submitBtn.textContent = 'Sending...';
-        submitBtn.disabled = true;
-        
-        // Get current date and time
-        const now = new Date();
-        const date = now.toLocaleDateString();
-        const time = now.toLocaleTimeString();
-        
-        // Prepare the template parameters
-        const templateParams = {
-          from_name: nameField.value.trim(),
-          from_email: emailField.value.trim(),
-          message: messageField.value.trim(),
-          date: date,
-          time: time
-        };
-        
-        // Send email using EmailJS
-        emailjs.send('service_ih91v8z', 'template_9ll2uuk', templateParams)
-          .then(function(response) {
-            console.log('SUCCESS!', response.status, response.text);
-            
-            // Clear the form fields
-            nameField.value = '';
-            emailField.value = '';
-            messageField.value = '';
-            
-            // Display the success message
-            successPopup.style.display = 'block';
-            
-            // Hide the success message after 3 seconds
-            setTimeout(function() {
-              successPopup.style.display = 'none';
-            }, 3000);
-          })
-          .catch(function(error) {
-            console.log('FAILED...', error);
-            alert('Sorry, there was an error sending your message. Please try again later.');
-          })
-          .finally(function() {
-            // Reset button state
-            submitBtn.textContent = originalText;
-            submitBtn.disabled = false;
-          });
-      }
-    });
-    
+    // Theme Management
     function toggleDarkMode() {
       document.body.classList.toggle('light-mode');
+      const isLightMode = document.body.classList.contains('light-mode');
+      localStorage.setItem('theme', isLightMode ? 'light' : 'dark');
+      updateThemeIcon(isLightMode);
     }
 
-    function scrollToTop() {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+    function updateThemeIcon(isLightMode) {
+      const icon = darkModeToggle.querySelector('i');
+      icon.className = isLightMode ? 'fas fa-moon' : 'fas fa-sun';
     }
 
+    // Load saved theme
+    window.addEventListener('DOMContentLoaded', () => {
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme === 'light') {
+        document.body.classList.add('light-mode');
+      }
+      updateThemeIcon(document.body.classList.contains('light-mode'));
+      
+      // Initialize typewriter
+      typewriter(document.getElementById('typewriter'), 'Aakash Chougule');
+      
+      // Initialize smooth scroll for navigation
+      initSmoothScroll();
+      
+      // Initialize project filters
+      initProjectFilters();
+      
+      // Track resume download
+      initResumeTracking();
+    });
+
+    // Typewriter Effect
+    function typewriter(element, text, speed = 100) {
+      let i = 0;
+      element.innerHTML = '';
+      
+      const timer = setInterval(() => {
+        if (i < text.length) {
+          element.innerHTML += text.charAt(i);
+          i++;
+        } else {
+          clearInterval(timer);
+        }
+      }, speed);
+    }
+
+    // Smooth Scroll with Offset
+    function initSmoothScroll() {
+      document.querySelectorAll('nav a').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+          e.preventDefault();
+          const targetId = this.getAttribute('href');
+          const targetSection = document.querySelector(targetId);
+          const headerHeight = document.querySelector('nav').offsetHeight;
+          
+          window.scrollTo({
+            top: targetSection.offsetTop - headerHeight - 20,
+            behavior: 'smooth'
+          });
+        });
+      });
+    }
+
+    // Project Filtering
+    function initProjectFilters() {
+      const filterButtons = document.querySelectorAll('.filter-btn');
+      const projectCards = document.querySelectorAll('.projects .card');
+
+      filterButtons.forEach(button => {
+        button.addEventListener('click', () => {
+          // Remove active class from all buttons
+          filterButtons.forEach(btn => btn.classList.remove('active'));
+          // Add active class to clicked button
+          button.classList.add('active');
+          
+          const filter = button.getAttribute('data-filter');
+          
+          projectCards.forEach(card => {
+            if (filter === 'all' || card.getAttribute('data-category') === filter) {
+              card.style.display = 'block';
+              setTimeout(() => {
+                card.style.opacity = '1';
+                card.style.transform = 'translateY(0)';
+              }, 50);
+            } else {
+              card.style.opacity = '0';
+              card.style.transform = 'translateY(20px)';
+              setTimeout(() => {
+                card.style.display = 'none';
+              }, 300);
+            }
+          });
+        });
+      });
+    }
+
+    // Skills Animation
+    function animateSkillBars() {
+      const skillBars = document.querySelectorAll('.bar-fill');
+      const skillsSection = document.getElementById('skills');
+      const sectionTop = skillsSection.getBoundingClientRect().top;
+      const screenPosition = window.innerHeight / 1.3;
+      
+      if (sectionTop < screenPosition) {
+        skillBars.forEach(bar => {
+          const width = bar.getAttribute('data-width');
+          bar.style.width = width;
+        });
+      }
+    }
+
+    // Resume Download Tracking
+    function initResumeTracking() {
+      resumeDownload.addEventListener('click', function() {
+        console.log('Resume downloaded - ' + new Date().toLocaleString());
+        // Here you can integrate with Google Analytics
+        // gtag('event', 'download', { 'event_category': 'Resume' });
+      });
+    }
+
+    // Enhanced Form Validation
+    function validateForm() {
+      let isValid = true;
+
+      // Name validation
+      const namePattern = /^[A-Za-z\s]+$/;
+      const nameGroup = nameField.closest('.form-group');
+      if (nameField.value.trim() === '' || !namePattern.test(nameField.value.trim())) {
+        nameGroup.classList.add('error');
+        isValid = false;
+      } else {
+        nameGroup.classList.remove('error');
+        nameGroup.classList.add('success');
+      }
+
+      // Email validation
+      const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+      const emailGroup = emailField.closest('.form-group');
+      if (emailField.value.trim() === '' || !emailPattern.test(emailField.value.trim())) {
+        emailGroup.classList.add('error');
+        isValid = false;
+      } else {
+        emailGroup.classList.remove('error');
+        emailGroup.classList.add('success');
+      }
+
+      // Message validation
+      const messageGroup = messageField.closest('.form-group');
+      if (messageField.value.trim() === '') {
+        messageGroup.classList.add('error');
+        isValid = false;
+      } else {
+        messageGroup.classList.remove('error');
+        messageGroup.classList.add('success');
+      }
+
+      return isValid;
+    }
+
+    // Real-time validation
+    [nameField, emailField, messageField].forEach(field => {
+      field.addEventListener('input', () => {
+        const group = field.closest('.form-group');
+        group.classList.remove('error', 'success');
+      });
+    });
+
+    // Form Submission
+    form.addEventListener('submit', function(event) {
+      event.preventDefault();
+      
+      if (!validateForm()) {
+        return;
+      }
+      
+      // Show loading state
+      submitBtn.disabled = true;
+      buttonText.innerHTML = '<i class="fas fa-spinner spinner"></i> Sending...';
+      
+      // Get current date and time
+      const now = new Date();
+      const date = now.toLocaleDateString();
+      const time = now.toLocaleTimeString();
+      
+      // Prepare the template parameters
+      const templateParams = {
+        from_name: nameField.value.trim(),
+        from_email: emailField.value.trim(),
+        message: messageField.value.trim(),
+        date: date,
+        time: time
+      };
+      
+      // Send email using EmailJS
+      emailjs.send('service_ih91v8z', 'template_9ll2uuk', templateParams)
+        .then(function(response) {
+          console.log('SUCCESS!', response.status, response.text);
+          
+          // Clear the form fields
+          form.reset();
+          document.querySelectorAll('.form-group').forEach(group => {
+            group.classList.remove('success');
+          });
+          
+          // Display the success message
+          successPopup.style.display = 'block';
+          
+          // Hide the success message after 3 seconds
+          setTimeout(function() {
+            successPopup.style.display = 'none';
+          }, 3000);
+        })
+        .catch(function(error) {
+          console.log('FAILED...', error);
+          alert('Sorry, there was an error sending your message. Please try again later.');
+        })
+        .finally(function() {
+          // Reset button state
+          submitBtn.disabled = false;
+          buttonText.innerHTML = 'Send Message';
+        });
+    });
+
+    // Scroll Animations
     function showSectionOnScroll() {
       const scrollPosition = window.scrollY + window.innerHeight;
       sections.forEach(section => {
@@ -544,23 +978,18 @@
           section.classList.add('visible');
         }
       });
+      animateSkillBars();
     }
 
-    window.addEventListener('scroll', showSectionOnScroll);
-    window.addEventListener('scroll', () => {
-      backToTopBtn.style.display = window.scrollY > 200 ? 'block' : 'none';
-    });
-    
-    showSectionOnScroll();
-    const navLinks = document.querySelectorAll("nav a");
-
+    // Navigation Highlighting
     function highlightNav() {
       let index = sections.length;
+      const navHeight = document.querySelector('nav').offsetHeight;
 
       while (--index >= 0) {
-        const sectionTop = sections[index].offsetTop - 150;
+        const sectionTop = sections[index].offsetTop - navHeight - 50;
         if (window.scrollY >= sectionTop) {
-          navLinks.forEach((link) => link.classList.remove("active"));
+          document.querySelectorAll("nav a").forEach((link) => link.classList.remove("active"));
           const activeSection = sections[index].getAttribute("id");
           const activeLink = document.querySelector(`nav a[href="#${activeSection}"]`);
           if (activeLink) activeLink.classList.add("active");
@@ -569,14 +998,22 @@
       }
     }
 
-    window.addEventListener("scroll", () => {
-      highlightNav();
-      backToTopBtn.style.display = window.scrollY > 200 ? "block" : "none";
+    // Back to Top Button
+    function scrollToTop() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Event Listeners
+    window.addEventListener('scroll', () => {
       showSectionOnScroll();
+      highlightNav();
+      backToTopBtn.style.display = window.scrollY > 200 ? 'block' : 'none';
     });
 
-    // Run once on load
+    // Initialize on load
+    showSectionOnScroll();
     highlightNav();
+    animateSkillBars();
   </script>
 </body>
 </html>
