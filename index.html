@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aakash Chougule | ASP.NET Developer</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+
+  <style>
+    :root {
+      --bg: #1e1e1e;
+      --text: #f1f1f1;
+      --primary: #2980b9;
+      --secondary: #2c2c2c;
+      --highlight: #e74c3c;
+    }
+
+    body.light-mode {
+      --bg: #f8f9fa;
+      --text: #212529;
+      --primary: #3498db;
+      --secondary: #ecf0f1;
+      --highlight: #e67e22;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Roboto', sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      scroll-behavior: smooth;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    header,
+    .profile-header {
+      background: var(--primary);
+      color: white;
+      text-align: center;
+      padding: 4rem 1rem;
+    }
+
+    .profile-header .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .profile-pic {
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 4px solid white;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+      transition: transform 0.3s ease;
+    }
+
+    .profile-pic:hover {
+      transform: scale(1.05);
+    }
+
+    .profile-text h1 {
+      margin: 0;
+      font-size: 2rem;
+    }
+
+    .profile-text p {
+      font-size: 1.2rem;
+      margin-top: 0.3rem;
+      opacity: 0.9;
+    }
+
+    nav {
+      position: sticky;
+      top: 0;
+      background: var(--secondary);
+      padding: 1rem;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      z-index: 100;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: var(--text);
+      font-weight: bold;
+    }
+
+    nav a.active {
+      color: var(--highlight);
+    }
+
+    .toggle-btn {
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      background: var(--highlight);
+      color: white;
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      z-index: 1000;
+    }
+
+    section {
+      padding: 4rem 2rem;
+      max-width: 1000px;
+      margin: auto;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.6s ease;
+    }
+
+    section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .projects h2 {
+      text-align: center;
+    }
+
+    .project-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .projects .card {
+      background: var(--secondary);
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      padding: 1rem;
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+      text-align: center;
+    }
+
+    .projects .card img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+    }
+
+    .projects .card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .skills {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .skill-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      justify-content: center;
+    }
+
+    .skill-box {
+      background: var(--secondary);
+      border-radius: 10px;
+      padding: 1rem;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      width: 160px;
+    }
+
+    .bar-container {
+      height: 10px;
+      background: #ccc;
+      border-radius: 5px;
+      overflow: hidden;
+      margin-top: 0.5rem;
+    }
+
+    .bar-fill {
+      height: 100%;
+      background: var(--primary);
+      width: var(--value);
+      transition: width 0.5s;
+    }
+
+    form input,
+    form textarea {
+      width: 100%;
+      padding: 0.5rem;
+      margin-bottom: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      background-color: var(--secondary);
+      color: var(--text);
+    }
+
+    form button {
+      padding: 0.5rem 1rem;
+      background: var(--highlight);
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    #backToTop {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background: var(--primary);
+      color: white;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 5px;
+      display: none;
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem;
+      background: var(--secondary);
+    }
+
+    .social-icons {
+      margin-top: 1.5rem;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+    }
+
+    .social-icons a {
+      color: var(--text);
+      font-size: 1.8rem;
+      transition: color 0.3s ease, transform 0.3s ease;
+    }
+
+    .social-icons a:hover {
+      color: var(--highlight);
+      transform: scale(1.2);
+    }
+
+    @media (max-width: 768px) {
+      .profile-header {
+        padding: 2rem 1rem;
+      }
+
+      .profile-pic {
+        width: 120px;
+        height: 120px;
+      }
+
+      nav {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .skill-box {
+        width: 100%;
+        max-width: 300px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <button class="toggle-btn" onclick="toggleDarkMode()">Toggle Theme</button>
+
+  <header class="profile-header">
+    <div class="container">
+      <img src="resources/images/profile_photo.jpeg" alt="Aakash Chougule" class="profile-pic" />
+      <div class="profile-text">
+        <h1>Aakash Chougule</h1>
+        <p>Fresher | ASP.NET Developer</p>
+      </div>
+    </div>
+  </header>
+
+  <nav>
+    <a href="#about">About</a>
+    <a href="#skills">Skills</a>
+    <a href="#projects">Projects</a>
+    <a href="#contact">Contact</a>
+  </nav>
+
+  <section id="about">
+    <h2>About Me</h2>
+    <div class="about-content">
+      <p>👋 Hey there! I'm <strong style="color: var(--highlight);">Aakash Chougule</strong>, an enthusiastic and dedicated <strong>ASP.NET Developer</strong> passionate about building modern, responsive web applications.</p>
+      <p>With a solid foundation in <strong>C#, ASP.NET MVC, Web API</strong>, and front-end technologies like <strong>HTML, CSS, JavaScript</strong>, I'm on a mission to turn complex ideas into smooth and efficient digital experiences.</p>
+      <p>I thrive in collaborative environments and love learning new tech. Whether it's developing scalable backend logic or designing intuitive UI, I bring creativity, logic, and attention to detail to every project.</p>
+      <p>🚀 Currently seeking opportunities to grow and contribute to real-world projects while leveling up as a full-stack developer.</p>
+    </div>
+    <div class="social-icons">
+      <a href="https://github.com/Aakash-Chougule" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
+      <a href="https://www.linkedin.com/in/aakash-chougule-031524186/" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+      <a href="mailto:aakashc549@gmail.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
+      <a href="https://stackoverflow.com/users/17657836/aakash-chougule" target="_blank" aria-label="Stack Overflow"><i class="fab fa-stack-overflow"></i></a>
+      <a href="https://www.hackerrank.com/profile/aakashc549" target="_blank" aria-label="HackerRank"><i class="fab fa-hackerrank"></i></a>
+      <a href="resources/Documents/Aakash_chougule_Resume.pdf" download aria-label="Download CV"><i class="fas fa-file-download"></i></a>
+    </div>
+  </section>
+
+  <section id="skills" class="skills">
+    <h2>Skills</h2>
+    <div class="skill-list">
+      <div class="skill-box">
+        <h4>HTML</h4>
+        <div class="bar-container"><div class="bar-fill" style="--value: 90%; width: 90%;"></div></div>
+      </div>
+      <div class="skill-box">
+        <h4>CSS</h4>
+        <div class="bar-container"><div class="bar-fill" style="--value: 85%; width: 85%;"></div></div>
+      </div>
+      <div class="skill-box">
+        <h4>JavaScript</h4>
+        <div class="bar-container"><div class="bar-fill" style="--value: 80%; width: 80%;"></div></div>
+      </div>
+      <div class="skill-box">
+        <h4>C#</h4>
+        <div class="bar-container"><div class="bar-fill" style="--value: 85%; width: 85%;"></div></div>
+      </div>
+      <div class="skill-box">
+        <h4>ASP.NET (Windows Forms)</h4>
+        <div class="bar-container"><div class="bar-fill" style="--value: 80%; width: 80%;"></div></div>
+      </div>
+      <div class="skill-box">
+        <h4>ASP.NET (Web Application)</h4>
+        <div class="bar-container"><div class="bar-fill" style="--value: 80%; width: 80%;"></div></div>
+      </div>
+      <div class="skill-box">
+        <h4>ASP.NET MVC</h4>
+        <div class="bar-container"><div class="bar-fill" style="--value: 80%; width: 80%;"></div></div>
+      </div>
+      <div class="skill-box">
+        <h4>ASP.NET Web API</h4>
+        <div class="bar-container"><div class="bar-fill" style="--value: 75%; width: 75%;"></div></div>
+      </div>
+      <div class="skill-box">
+        <h4>Microsoft SQL</h4>
+        <div class="bar-container"><div class="bar-fill" style="--value: 75%; width: 75%;"></div></div>
+      </div>
+      <div class="skill-box">
+        <h4>Laravel (MVC)</h4>
+        <div class="bar-container"><div class="bar-fill" style="--value: 40%; width: 40%;"></div></div>
+      </div>
+      <div class="skill-box">
+        <h4>Android (Java)</h4>
+        <div class="bar-container"><div class="bar-fill" style="--value: 75%; width: 75%;"></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects" class="projects">
+    <h2>Projects</h2>
+    <div class="project-grid">
+      <div class="card">
+        <img src="resources/images/inventory_managemant.png" alt="Inventory System">
+        <h3>Inventory Management System</h3>
+        <p>ASP.NET based application to manage stock, sales, and purchase</p>
+        <a href="https://github.com/Aakash-Chougule">View on GitHub</a>
+      </div>
+      <div class="card">
+        <img src="resources/images/laxmi_traders.png" alt="Store System">
+        <h3>Store Management System (Luxmi Traders)</h3>
+        <p>Windows Forms app for local store inventory and sales management.</p>
+        <a href="https://github.com/Aakash-Chougule">View on GitHub</a>
+      </div>
+      <div class="card">
+        <img src="resources/images/cafe_coffee_bean.png" alt="Cafe Coffee Bean Website">
+        <h3>Cafe Coffee Bean Website</h3>
+        <p>HTML, CSS, and JS website for the coffee shop.</p>
+        <a href="https://github.com/Aakash-Chougule">View on GitHub</a>
+      </div>
+      <div class="card">
+        <img src="resources/images/dil_se_connect.png" alt="DilSeConnect Design">
+        <h3>DilSeConnect App Design</h3>
+        <p>UI design for a social connection app using Android Studio (Java).</p>
+        <a href="https://github.com/Aakash-Chougule">View Details</a>
+      </div>
+      <div class="card">
+        <img src="resources/images/vue_js.png" alt="Website Template">
+        <h3>Vue.js Website Template</h3>
+        <p>Responsive single-page template using Vue.js and Tailwind CSS.</p>
+        <a href="https://github.com/Aakash-Chougule">View on GitHub</a>
+      </div>
+      <div class="card">
+        <img src="resources/images/portfolio.png" alt="Portfolio Website">
+        <h3>Portfolio Website</h3>
+        <p>Fully responsive personal portfolio with dark mode and animations.</p>
+        <a href="https://github.com/Aakash-Chougule">Live Demo</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <h2>Contact Me</h2>
+    <form id="contactForm">
+      <input type="text" id="name" name="name" placeholder="Your Name" required />
+      <input type="email" id="email" name="email" placeholder="Your Email" required />
+      <textarea id="message" name="message" rows="5" placeholder="Your Message" required></textarea>
+      <button type="submit">Send Message</button>
+    </form>
+  </section>
+
+  <div id="successPopup" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: #28a745; color: white; padding: 1rem 2rem; border-radius: 8px; font-size: 1.2rem; z-index: 10000;">
+    Your message has been sent to the developer!
+  </div>
+
+  <footer>
+    <p>&copy; 2025 Aakash Chougule | ASP.NET Developer</p>
+  </footer>
+
+  <button id="backToTop" onclick="scrollToTop()">Back to Top</button>
+
+  <script>
+    // Initialize EmailJS with your public key
+    emailjs.init("2ebBAJBkDrupcL5F7");
+    
+    const darkModeToggle = document.querySelector('.toggle-btn');
+    const sections = document.querySelectorAll('section');
+    const backToTopBtn = document.getElementById('backToTop');
+    
+    // EmailJS form handling
+    const form = document.getElementById('contactForm');
+    const nameField = document.getElementById('name');
+    const emailField = document.getElementById('email');
+    const messageField = document.getElementById('message');
+    const successPopup = document.getElementById('successPopup');
+
+    form.addEventListener('submit', function(event) {
+      // Prevent form submission to handle validation
+      event.preventDefault();
+      
+      let valid = true;
+
+      // Check if Name is filled and contains only letters
+      const namePattern = /^[A-Za-z\s]+$/;  // Name can only contain letters and spaces
+      if (nameField.value.trim() === '') {
+        valid = false;
+        alert('Name is required');
+      } else if (!namePattern.test(nameField.value.trim())) {
+        valid = false;
+        alert('Name can only contain letters and spaces');
+      }
+      
+      // Check if Email is filled and valid
+      const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+      if (emailField.value.trim() === '') {
+        valid = false;
+        alert('Email is required');
+      } else if (!emailPattern.test(emailField.value.trim())) {
+        valid = false;
+        alert('Please enter a valid email address');
+      }
+
+      // Check if Message is filled
+      if (messageField.value.trim() === '') {
+        valid = false;
+        alert('Message cannot be empty');
+      }
+      
+      // If all checks pass, send the email via EmailJS
+      if (valid) {
+        // Show loading state
+        const submitBtn = form.querySelector('button[type="submit"]');
+        const originalText = submitBtn.textContent;
+        submitBtn.textContent = 'Sending...';
+        submitBtn.disabled = true;
+        
+        // Get current date and time
+        const now = new Date();
+        const date = now.toLocaleDateString();
+        const time = now.toLocaleTimeString();
+        
+        // Prepare the template parameters
+        const templateParams = {
+          from_name: nameField.value.trim(),
+          from_email: emailField.value.trim(),
+          message: messageField.value.trim(),
+          date: date,
+          time: time
+        };
+        
+        // Send email using EmailJS
+        emailjs.send('service_ih91v8z', 'template_9ll2uuk', templateParams)
+          .then(function(response) {
+            console.log('SUCCESS!', response.status, response.text);
+            
+            // Clear the form fields
+            nameField.value = '';
+            emailField.value = '';
+            messageField.value = '';
+            
+            // Display the success message
+            successPopup.style.display = 'block';
+            
+            // Hide the success message after 3 seconds
+            setTimeout(function() {
+              successPopup.style.display = 'none';
+            }, 3000);
+          })
+          .catch(function(error) {
+            console.log('FAILED...', error);
+            alert('Sorry, there was an error sending your message. Please try again later.');
+          })
+          .finally(function() {
+            // Reset button state
+            submitBtn.textContent = originalText;
+            submitBtn.disabled = false;
+          });
+      }
+    });
+    
+    function toggleDarkMode() {
+      document.body.classList.toggle('light-mode');
+    }
+
+    function scrollToTop() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function showSectionOnScroll() {
+      const scrollPosition = window.scrollY + window.innerHeight;
+      sections.forEach(section => {
+        if (section.offsetTop < scrollPosition) {
+          section.classList.add('visible');
+        }
+      });
+    }
+
+    window.addEventListener('scroll', showSectionOnScroll);
+    window.addEventListener('scroll', () => {
+      backToTopBtn.style.display = window.scrollY > 200 ? 'block' : 'none';
+    });
+    
+    showSectionOnScroll();
+    const navLinks = document.querySelectorAll("nav a");
+
+    function highlightNav() {
+      let index = sections.length;
+
+      while (--index >= 0) {
+        const sectionTop = sections[index].offsetTop - 150;
+        if (window.scrollY >= sectionTop) {
+          navLinks.forEach((link) => link.classList.remove("active"));
+          const activeSection = sections[index].getAttribute("id");
+          const activeLink = document.querySelector(`nav a[href="#${activeSection}"]`);
+          if (activeLink) activeLink.classList.add("active");
+          break;
+        }
+      }
+    }
+
+    window.addEventListener("scroll", () => {
+      highlightNav();
+      backToTopBtn.style.display = window.scrollY > 200 ? "block" : "none";
+      showSectionOnScroll();
+    });
+
+    // Run once on load
+    highlightNav();
+  </script>
+</body>
+</html>
