@@ -7,21 +7,9 @@
   <title>Aakash Chougule | ASP.NET Developer</title>
   
   <!-- SEO Meta Tags -->
-  <meta name="description" content="Aakash Chougule - ASP.NET Developer specializing in modern web applications, C#, and full-stack development. View my portfolio and projects.">
-  <meta name="keywords" content="ASP.NET Developer, C#, Web Development, Portfolio, Full Stack Developer, ASP.NET MVC, Web API">
+  <meta name="description" content="Aakash Chougule - ASP.NET Developer specializing in modern web applications, C#, and full-stack development.">
+  <meta name="keywords" content="ASP.NET Developer, C#, Web Development, Portfolio, Full Stack Developer">
   <meta name="author" content="Aakash Chougule">
-  <meta name="robots" content="index, follow">
-
-  <!-- Open Graph Tags -->
-  <meta property="og:title" content="Aakash Chougule | ASP.NET Developer">
-  <meta property="og:description" content="Professional ASP.NET Developer Portfolio - Building modern, responsive web applications">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://aakashchougule.com">
-
-  <!-- Twitter Card -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Aakash Chougule | ASP.NET Developer">
-  <meta name="twitter:description" content="Professional ASP.NET Developer Portfolio">
 
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -84,7 +72,6 @@
       text-align: center;
       padding: 4rem 1rem;
       position: relative;
-      overflow: hidden;
     }
 
     .profile-header .container {
@@ -111,7 +98,6 @@
     .profile-text h1 {
       margin: 0;
       font-size: 2rem;
-      min-height: 2.4rem;
     }
 
     .profile-text p {
@@ -526,7 +512,7 @@
     <div class="container">
       <img src="resources/images/profile_photo.jpeg" alt="Aakash Chougule" class="profile-pic" />
       <div class="profile-text">
-        <h1 id="typewriter"></h1>
+        <h1>Aakash Chougule</h1>
         <p>Fresher | ASP.NET Developer</p>
       </div>
     </div>
@@ -742,9 +728,8 @@
     const successPopup = document.getElementById('successPopup');
     const submitBtn = document.getElementById('submitBtn');
     const buttonText = document.getElementById('buttonText');
-    const resumeDownload = document.getElementById('resumeDownload');
 
-    // Theme Management
+    // ==================== THEME MANAGEMENT ====================
     function toggleDarkMode() {
       document.body.classList.toggle('light-mode');
       const isLightMode = document.body.classList.contains('light-mode');
@@ -757,43 +742,7 @@
       icon.className = isLightMode ? 'fas fa-moon' : 'fas fa-sun';
     }
 
-    // Load saved theme
-    window.addEventListener('DOMContentLoaded', () => {
-      const savedTheme = localStorage.getItem('theme');
-      if (savedTheme === 'light') {
-        document.body.classList.add('light-mode');
-      }
-      updateThemeIcon(document.body.classList.contains('light-mode'));
-      
-      // Initialize typewriter
-      typewriter(document.getElementById('typewriter'), 'Aakash Chougule');
-      
-      // Initialize smooth scroll for navigation
-      initSmoothScroll();
-      
-      // Initialize project filters
-      initProjectFilters();
-      
-      // Track resume download
-      initResumeTracking();
-    });
-
-    // Typewriter Effect
-    function typewriter(element, text, speed = 100) {
-      let i = 0;
-      element.innerHTML = '';
-      
-      const timer = setInterval(() => {
-        if (i < text.length) {
-          element.innerHTML += text.charAt(i);
-          i++;
-        } else {
-          clearInterval(timer);
-        }
-      }, speed);
-    }
-
-    // Smooth Scroll with Offset
+    // ==================== SMOOTH SCROLL ====================
     function initSmoothScroll() {
       document.querySelectorAll('nav a').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
@@ -810,16 +759,14 @@
       });
     }
 
-    // Project Filtering
+    // ==================== PROJECT FILTERING ====================
     function initProjectFilters() {
       const filterButtons = document.querySelectorAll('.filter-btn');
       const projectCards = document.querySelectorAll('.projects .card');
 
       filterButtons.forEach(button => {
         button.addEventListener('click', () => {
-          // Remove active class from all buttons
           filterButtons.forEach(btn => btn.classList.remove('active'));
-          // Add active class to clicked button
           button.classList.add('active');
           
           const filter = button.getAttribute('data-filter');
@@ -843,7 +790,7 @@
       });
     }
 
-    // Skills Animation
+    // ==================== SKILLS ANIMATION ====================
     function animateSkillBars() {
       const skillBars = document.querySelectorAll('.bar-fill');
       const skillsSection = document.getElementById('skills');
@@ -858,20 +805,10 @@
       }
     }
 
-    // Resume Download Tracking
-    function initResumeTracking() {
-      resumeDownload.addEventListener('click', function() {
-        console.log('Resume downloaded - ' + new Date().toLocaleString());
-        // Here you can integrate with Google Analytics
-        // gtag('event', 'download', { 'event_category': 'Resume' });
-      });
-    }
-
-    // Enhanced Form Validation
+    // ==================== FORM VALIDATION ====================
     function validateForm() {
       let isValid = true;
 
-      // Name validation
       const namePattern = /^[A-Za-z\s]+$/;
       const nameGroup = nameField.closest('.form-group');
       if (nameField.value.trim() === '' || !namePattern.test(nameField.value.trim())) {
@@ -882,7 +819,6 @@
         nameGroup.classList.add('success');
       }
 
-      // Email validation
       const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
       const emailGroup = emailField.closest('.form-group');
       if (emailField.value.trim() === '' || !emailPattern.test(emailField.value.trim())) {
@@ -893,7 +829,6 @@
         emailGroup.classList.add('success');
       }
 
-      // Message validation
       const messageGroup = messageField.closest('.form-group');
       if (messageField.value.trim() === '') {
         messageGroup.classList.add('error');
@@ -914,7 +849,7 @@
       });
     });
 
-    // Form Submission
+    // ==================== FORM SUBMISSION ====================
     form.addEventListener('submit', function(event) {
       event.preventDefault();
       
@@ -922,16 +857,13 @@
         return;
       }
       
-      // Show loading state
       submitBtn.disabled = true;
       buttonText.innerHTML = '<i class="fas fa-spinner spinner"></i> Sending...';
       
-      // Get current date and time
       const now = new Date();
       const date = now.toLocaleDateString();
       const time = now.toLocaleTimeString();
       
-      // Prepare the template parameters
       const templateParams = {
         from_name: nameField.value.trim(),
         from_email: emailField.value.trim(),
@@ -940,21 +872,16 @@
         time: time
       };
       
-      // Send email using EmailJS
       emailjs.send('service_ih91v8z', 'template_9ll2uuk', templateParams)
         .then(function(response) {
           console.log('SUCCESS!', response.status, response.text);
           
-          // Clear the form fields
           form.reset();
           document.querySelectorAll('.form-group').forEach(group => {
             group.classList.remove('success');
           });
           
-          // Display the success message
           successPopup.style.display = 'block';
-          
-          // Hide the success message after 3 seconds
           setTimeout(function() {
             successPopup.style.display = 'none';
           }, 3000);
@@ -964,13 +891,12 @@
           alert('Sorry, there was an error sending your message. Please try again later.');
         })
         .finally(function() {
-          // Reset button state
           submitBtn.disabled = false;
           buttonText.innerHTML = 'Send Message';
         });
     });
 
-    // Scroll Animations
+    // ==================== SCROLL ANIMATIONS ====================
     function showSectionOnScroll() {
       const scrollPosition = window.scrollY + window.innerHeight;
       sections.forEach(section => {
@@ -981,7 +907,6 @@
       animateSkillBars();
     }
 
-    // Navigation Highlighting
     function highlightNav() {
       let index = sections.length;
       const navHeight = document.querySelector('nav').offsetHeight;
@@ -998,10 +923,25 @@
       }
     }
 
-    // Back to Top Button
     function scrollToTop() {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
+
+    // ==================== INITIALIZATION ====================
+    window.addEventListener('DOMContentLoaded', () => {
+      // Load saved theme
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme === 'light') {
+        document.body.classList.add('light-mode');
+      }
+      updateThemeIcon(document.body.classList.contains('light-mode'));
+      
+      // Initialize features
+      initSmoothScroll();
+      initProjectFilters();
+      
+      console.log('Portfolio loaded successfully!');
+    });
 
     // Event Listeners
     window.addEventListener('scroll', () => {
