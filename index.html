@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -11,28 +10,14 @@
   <meta name="keywords" content="ASP.NET Developer, C#, Web Development, Portfolio, Full Stack Developer">
   <meta name="author" content="Aakash Chougule">
   
-  <!-- Structured Data -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Person",
-    "name": "Aakash Chougule",
-    "jobTitle": "ASP.NET Developer",
-    "url": "https://aakashchougule.com",
-    "sameAs": [
-      "https://github.com/Aakash-Chougule",
-      "https://www.linkedin.com/in/aakash-chougule-031524186/"
-    ],
-    "knowsAbout": ["ASP.NET", "C#", "Web Development", "SQL", "JavaScript"]
-  }
-  </script>
-
+  <!-- Preload critical resources -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
 
   <style>
+    /* CRITICAL CSS - Inline for immediate rendering */
     :root {
       --bg: #1e1e1e;
       --text: #f1f1f1;
@@ -72,15 +57,7 @@
       overflow-x: hidden;
     }
 
-    /* Particles Background */
-    #particles-js {
-      position: fixed;
-      width: 100%;
-      height: 100%;
-      z-index: -1;
-    }
-
-    /* Loading Spinner */
+    /* Loading State */
     #loading-screen {
       position: fixed;
       top: 0;
@@ -106,19 +83,22 @@
       100% { transform: rotate(360deg); }
     }
 
-    /* Typing Animation */
-    .typing-container {
-      display: inline-block;
+    /* Skip Link for Accessibility */
+    .skip-link {
+      position: absolute;
+      top: -40px;
+      left: 6px;
+      background: var(--highlight);
+      color: white;
+      padding: 8px 16px;
+      text-decoration: none;
+      z-index: 10000;
+      border-radius: 4px;
+      font-weight: bold;
     }
 
-    .typing-text {
-      border-right: 2px solid var(--highlight);
-      animation: blink 1s infinite;
-    }
-
-    @keyframes blink {
-      0%, 100% { border-color: transparent; }
-      50% { border-color: var(--highlight); }
+    .skip-link:focus {
+      top: 6px;
     }
 
     header,
@@ -205,6 +185,7 @@
       opacity: 0.8;
     }
 
+    /* Navigation Styles */
     nav {
       position: sticky;
       top: 0;
@@ -217,6 +198,14 @@
       box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
       z-index: 100;
       backdrop-filter: blur(10px);
+    }
+
+    .nav-links {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+      transition: all 0.3s ease;
     }
 
     nav a {
@@ -252,6 +241,24 @@
       transform: translateY(-2px);
     }
 
+    /* Mobile Menu Styles */
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      color: var(--text);
+      font-size: 1.5rem;
+      cursor: pointer;
+      padding: 0.5rem;
+      border-radius: 5px;
+      transition: all 0.3s ease;
+    }
+
+    .mobile-menu-btn:hover {
+      background: rgba(255, 255, 255, 0.1);
+      transform: scale(1.1);
+    }
+
     .toggle-btn {
       position: fixed;
       top: 1rem;
@@ -273,20 +280,6 @@
     .toggle-btn:hover {
       transform: scale(1.1) translateY(-2px);
       box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
-    }
-
-    .language-switcher {
-      position: fixed;
-      top: 1rem;
-      right: 6rem;
-      background: var(--secondary);
-      color: var(--text);
-      padding: 0.5rem 1rem;
-      border: none;
-      border-radius: 20px;
-      cursor: pointer;
-      z-index: 1000;
-      transition: all 0.3s ease;
     }
 
     section {
@@ -475,10 +468,28 @@
       border-radius: 10px;
       margin-bottom: 1.5rem;
       transition: transform 0.3s ease;
+      loading: lazy;
     }
 
     .projects .card:hover img {
       transform: scale(1.08);
+    }
+
+    .project-tech {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      justify-content: center;
+      margin: 1rem 0;
+    }
+
+    .tech-tag {
+      background: rgba(52, 152, 219, 0.2);
+      color: var(--primary);
+      padding: 0.3rem 0.8rem;
+      border-radius: 15px;
+      font-size: 0.8rem;
+      font-weight: 600;
     }
 
     .project-views {
@@ -490,6 +501,15 @@
       padding: 0.25rem 0.75rem;
       border-radius: 15px;
       font-size: 0.8rem;
+    }
+
+    .achievement {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 0.5rem;
+      font-size: 0.9rem;
+      color: var(--highlight);
     }
 
     .card a {
@@ -620,6 +640,88 @@
       100% { left: 100%; }
     }
 
+    /* Blog Section Styles */
+    .blog-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 2.5rem;
+      margin-top: 2rem;
+    }
+
+    .blog-card {
+      background: var(--secondary);
+      border-radius: 15px;
+      padding: 2rem;
+      transition: all 0.3s ease;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .blog-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(52, 152, 219, 0.1), transparent);
+      transition: left 0.5s;
+    }
+
+    .blog-card:hover::before {
+      left: 100%;
+    }
+
+    .blog-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .blog-category {
+      display: inline-block;
+      background: var(--primary);
+      color: white;
+      padding: 0.3rem 1rem;
+      border-radius: 15px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+
+    .blog-date {
+      color: var(--text);
+      opacity: 0.7;
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    .blog-card h3 {
+      margin-bottom: 1rem;
+      color: var(--primary);
+    }
+
+    .blog-card p {
+      margin-bottom: 1.5rem;
+      line-height: 1.6;
+    }
+
+    .blog-stats {
+      display: flex;
+      gap: 1rem;
+      font-size: 0.8rem;
+      color: var(--text);
+      opacity: 0.7;
+      margin-bottom: 1rem;
+    }
+
+    .blog-stats span {
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
     /* Enhanced Form Styles */
     .form-group {
       margin-bottom: 2rem;
@@ -666,6 +768,14 @@
 
     .form-group.error .error-message {
       display: block;
+    }
+
+    .char-count {
+      text-align: right;
+      font-size: 0.8rem;
+      margin-top: 0.25rem;
+      color: var(--text);
+      opacity: 0.7;
     }
 
     form button {
@@ -852,7 +962,7 @@
 
     /* Print Styles */
     @media print {
-      .toggle-btn, #backToTop, nav, .social-icons a:last-child {
+      .toggle-btn, #backToTop, nav, .social-icons a:last-child, .project-filters {
         display: none !important;
       }
       
@@ -864,6 +974,20 @@
       section {
         opacity: 1 !important;
         transform: none !important;
+        break-inside: avoid;
+      }
+      
+      .card {
+        break-inside: avoid;
+      }
+    }
+
+    /* Reduced Motion Support */
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
       }
     }
 
@@ -890,10 +1014,43 @@
         font-size: 1.5rem;
       }
 
+      /* Mobile Navigation */
       nav {
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.5rem 1rem;
+      }
+
+      .nav-links {
+        position: fixed;
+        top: 70px;
+        left: 0;
+        width: 100%;
+        background: var(--secondary);
         flex-direction: column;
         align-items: center;
-        gap: 0.5rem;
+        padding: 1rem 0;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        transform: translateY(-100%);
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+      }
+
+      .nav-links.active {
+        transform: translateY(0);
+        opacity: 1;
+        visibility: visible;
+      }
+
+      .nav-links a {
+        width: 90%;
+        text-align: center;
+        margin: 0.5rem 0;
+      }
+
+      .mobile-menu-btn {
+        display: block;
       }
 
       .timeline::before {
@@ -931,9 +1088,8 @@
         grid-template-columns: 1fr;
       }
 
-      .language-switcher {
-        right: 1rem;
-        top: 5rem;
+      .blog-grid {
+        grid-template-columns: 1fr;
       }
     }
 
@@ -973,15 +1129,12 @@
     </div>
   </div>
 
-  <!-- Particles Background -->
-  <div id="particles-js"></div>
+  <!-- Skip Link for Accessibility -->
+  <a href="#main" class="skip-link">Skip to main content</a>
 
+  <!-- Theme Toggle -->
   <button class="toggle-btn" onclick="toggleDarkMode()">
     <i class="fas fa-moon"></i> Theme
-  </button>
-
-  <button class="language-switcher" onclick="toggleLanguage()">
-    <i class="fas fa-globe"></i> EN
   </button>
 
   <header class="profile-header">
@@ -1010,305 +1163,451 @@
     </div>
   </header>
 
-  <nav>
-    <a href="#about">About</a>
-    <a href="#experience">Experience</a>
-    <a href="#skills">Skills</a>
-    <a href="#projects">Projects</a>
-    <a href="#contact">Contact</a>
-    <a href="#blog">Blog</a>
+  <nav role="navigation" aria-label="Main navigation">
+    <div class="nav-links" id="navLinks">
+      <a href="#about">About</a>
+      <a href="#experience">Experience</a>
+      <a href="#skills">Skills</a>
+      <a href="#projects">Projects</a>
+      <a href="#blog">Blog</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">
+      <i class="fas fa-bars"></i>
+    </button>
   </nav>
 
-  <section id="about">
-    <h2>About Me</h2>
-    <div class="about-content">
-      <p>👋 Hey there! I'm <strong style="color: var(--highlight);">Aakash Chougule</strong>, an enthusiastic and dedicated <strong>ASP.NET Developer</strong> passionate about building modern, responsive web applications.</p>
-      <p>With a solid foundation in <strong>C#, ASP.NET MVC, Web API</strong>, and front-end technologies like <strong>HTML, CSS, JavaScript</strong>, I'm on a mission to turn complex ideas into smooth and efficient digital experiences.</p>
-      <p>I thrive in collaborative environments and love learning new tech. Whether it's developing scalable backend logic or designing intuitive UI, I bring creativity, logic, and attention to detail to every project.</p>
-      <p>🚀 Currently seeking opportunities to grow and contribute to real-world projects while leveling up as a full-stack developer.</p>
-    </div>
-    
-    <!-- GitHub Contributions -->
-    <div class="github-contributions">
-      <h3>GitHub Contributions</h3>
-      <p>Check out my coding activity and contributions on GitHub:</p>
-      <a href="https://github.com/Aakash-Chougule" target="_blank" class="card a">View GitHub Profile</a>
-    </div>
-
-    <div class="social-icons">
-      <a href="https://github.com/Aakash-Chougule" target="_blank" aria-label="GitHub">
-        <i class="fab fa-github"></i>
-      </a>
-      <a href="https://www.linkedin.com/in/aakash-chougule-031524186/" target="_blank" aria-label="LinkedIn">
-        <i class="fab fa-linkedin"></i>
-      </a>
-      <a href="mailto:aakashc549@gmail.com" aria-label="Email">
-        <i class="fas fa-envelope"></i>
-      </a>
-      <a href="https://stackoverflow.com/users/17657836/aakash-chougule" target="_blank" aria-label="Stack Overflow">
-        <i class="fab fa-stack-overflow"></i>
-      </a>
-      <a href="https://www.hackerrank.com/profile/aakashc549" target="_blank" aria-label="HackerRank">
-        <i class="fab fa-hackerrank"></i>
-      </a>
-      <a href="resources/Documents/Aakash_chougule_Resume.pdf" download aria-label="Download CV" id="resumeDownload">
-        <i class="fas fa-file-download"></i>
-      </a>
-    </div>
-  </section>
-
-  <section id="experience">
-    <h2>Experience & Education</h2>
-    <div class="timeline">
-      <div class="timeline-item">
-        <div class="timeline-content">
-          <h3>ASP.NET Developer Training</h3>
-          <p class="timeline-date">2023 - Present</p>
-          <p>Intensive training in ASP.NET ecosystem, building real-world projects and applications.</p>
-        </div>
-      </div>
-      <div class="timeline-item">
-        <div class="timeline-content">
-          <h3>Bachelor's Degree in Computer Science</h3>
-          <p class="timeline-date">2019 - 2023</p>
-          <p>Completed degree with focus on software engineering, web technologies, and database management.</p>
-        </div>
-      </div>
-      <div class="timeline-item">
-        <div class="timeline-content">
-          <h3>Web Development Intern</h3>
-          <p class="timeline-date">Summer 2022</p>
-          <p>Gained practical experience in front-end development and collaborated on live projects.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section id="skills" class="skills">
-    <h2>Skills</h2>
-    
-    <!-- Search Bar -->
-    <div class="search-container">
-      <input type="text" class="search-bar" id="skillSearch" placeholder="Search skills...">
-      <i class="fas fa-search search-icon"></i>
-    </div>
-
-    <div class="skill-list">
-      <div class="skill-box" data-skill="html">
-        <h4>HTML</h4>
-        <div class="bar-container">
-          <div class="bar-fill" data-width="90%"></div>
-        </div>
-        <div class="skill-details">
-          Semantic HTML5, Accessibility, SEO Optimization
-        </div>
-      </div>
-      <div class="skill-box" data-skill="css">
-        <h4>CSS</h4>
-        <div class="bar-container">
-          <div class="bar-fill" data-width="85%"></div>
-        </div>
-        <div class="skill-details">
-          Flexbox, Grid, Animations, Responsive Design
-        </div>
-      </div>
-      <div class="skill-box" data-skill="javascript">
-        <h4>JavaScript</h4>
-        <div class="bar-container">
-          <div class="bar-fill" data-width="80%"></div>
-        </div>
-        <div class="skill-details">
-          ES6+, DOM Manipulation, Async Programming
-        </div>
-      </div>
-      <div class="skill-box" data-skill="csharp">
-        <h4>C#</h4>
-        <div class="bar-container">
-          <div class="bar-fill" data-width="85%"></div>
-        </div>
-        <div class="skill-details">
-          OOP, LINQ, Entity Framework, .NET Core
-        </div>
-      </div>
-      <div class="skill-box" data-skill="aspnet">
-        <h4>ASP.NET (Windows Forms)</h4>
-        <div class="bar-container">
-          <div class="bar-fill" data-width="80%"></div>
-        </div>
-        <div class="skill-details">
-          Desktop Applications, WinForms, Data Binding
-        </div>
-      </div>
-      <div class="skill-box" data-skill="aspnet-web">
-        <h4>ASP.NET (Web Application)</h4>
-        <div class="bar-container">
-          <div class="bar-fill" data-width="80%"></div>
-        </div>
-        <div class="skill-details">
-          Web Forms, Server Controls, State Management
-        </div>
-      </div>
-      <div class="skill-box" data-skill="mvc">
-        <h4>ASP.NET MVC</h4>
-        <div class="bar-container">
-          <div class="bar-fill" data-width="80%"></div>
-        </div>
-        <div class="skill-details">
-          Model-View-Controller, Razor Views, Routing
-        </div>
-      </div>
-      <div class="skill-box" data-skill="webapi">
-        <h4>ASP.NET Web API</h4>
-        <div class="bar-container">
-          <div class="bar-fill" data-width="75%"></div>
-        </div>
-        <div class="skill-details">
-          RESTful APIs, JSON Serialization, HTTP Methods
-        </div>
-      </div>
-      <div class="skill-box" data-skill="sql">
-        <h4>Microsoft SQL</h4>
-        <div class="bar-container">
-          <div class="bar-fill" data-width="75%"></div>
-        </div>
-        <div class="skill-details">
-          T-SQL, Stored Procedures, Database Design
-        </div>
-      </div>
-      <div class="skill-box" data-skill="laravel">
-        <h4>Laravel (MVC)</h4>
-        <div class="bar-container">
-          <div class="bar-fill" data-width="40%"></div>
-        </div>
-        <div class="skill-details">
-          PHP Framework, Eloquent ORM, Blade Templates
-        </div>
-      </div>
-      <div class="skill-box" data-skill="android">
-        <h4>Android (Java)</h4>
-        <div class="bar-container">
-          <div class="bar-fill" data-width="75%"></div>
-        </div>
-        <div class="skill-details">
-          Mobile Development, UI Design, Java Programming
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section id="projects" class="projects">
-    <h2>Projects</h2>
-    
-    <div class="project-filters">
-      <button class="filter-btn active" data-filter="all">All Projects</button>
-      <button class="filter-btn" data-filter="web">Web Apps</button>
-      <button class="filter-btn" data-filter="desktop">Desktop</button>
-      <button class="filter-btn" data-filter="mobile">Mobile</button>
-      <button class="filter-btn" data-filter="api">APIs</button>
-    </div>
-
-    <div class="project-grid">
-      <div class="card" data-category="web">
-        <div class="project-views">
-          <i class="fas fa-eye"></i> <span id="views-inventory">0</span>
-        </div>
-        <img src="resources/images/inventory_managemant.png" alt="Inventory System">
-        <h3>Inventory Management System</h3>
-        <p>ASP.NET based application to manage stock, sales, and purchase</p>
-        <a href="https://github.com/Aakash-Chougule" onclick="trackProjectView('inventory')">View on GitHub</a>
-      </div>
-      <div class="card" data-category="desktop">
-        <div class="project-views">
-          <i class="fas fa-eye"></i> <span id="views-store">0</span>
-        </div>
-        <img src="resources/images/laxmi_traders.png" alt="Store System">
-        <h3>Store Management System (Luxmi Traders)</h3>
-        <p>Windows Forms app for local store inventory and sales management.</p>
-        <a href="https://github.com/Aakash-Chougule" onclick="trackProjectView('store')">View on GitHub</a>
-      </div>
-      <div class="card" data-category="web">
-        <div class="project-views">
-          <i class="fas fa-eye"></i> <span id="views-cafe">0</span>
-        </div>
-        <img src="resources/images/cafe_coffee_bean.png" alt="Cafe Coffee Bean Website">
-        <h3>Cafe Coffee Bean Website</h3>
-        <p>HTML, CSS, and JS website for the coffee shop.</p>
-        <a href="https://github.com/Aakash-Chougule" onclick="trackProjectView('cafe')">View on GitHub</a>
-      </div>
-      <div class="card" data-category="mobile">
-        <div class="project-views">
-          <i class="fas fa-eye"></i> <span id="views-dilse">0</span>
-        </div>
-        <img src="resources/images/dil_se_connect.png" alt="DilSeConnect Design">
-        <h3>DilSeConnect App Design</h3>
-        <p>UI design for a social connection app using Android Studio (Java).</p>
-        <a href="https://github.com/Aakash-Chougule" onclick="trackProjectView('dilse')">View Details</a>
-      </div>
-      <div class="card" data-category="web">
-        <div class="project-views">
-          <i class="fas fa-eye"></i> <span id="views-vue">0</span>
-        </div>
-        <img src="resources/images/vue_js.png" alt="Website Template">
-        <h3>Vue.js Website Template</h3>
-        <p>Responsive single-page template using Vue.js and Tailwind CSS.</p>
-        <a href="https://github.com/Aakash-Chougule" onclick="trackProjectView('vue')">View on GitHub</a>
-      </div>
-      <div class="card" data-category="web">
-        <div class="project-views">
-          <i class="fas fa-eye"></i> <span id="views-portfolio">0</span>
-        </div>
-        <img src="resources/images/portfolio.png" alt="Portfolio Website">
-        <h3>Portfolio Website</h3>
-        <p>Fully responsive personal portfolio with dark mode and animations.</p>
-        <a href="https://github.com/Aakash-Chougule" onclick="trackProjectView('portfolio')">Live Demo</a>
-      </div>
-    </div>
-  </section>
-
-  <section id="blog">
-    <h2>Latest Articles</h2>
-    <div class="project-grid">
-      <div class="card">
-        <h3>Getting Started with ASP.NET Core</h3>
-        <p>A beginner's guide to building web applications with ASP.NET Core and C#.</p>
-        <a href="#">Read More</a>
-      </div>
-      <div class="card">
-        <h3>Modern CSS Techniques</h3>
-        <p>Exploring Flexbox, Grid, and animations for better web design.</p>
-        <a href="#">Read More</a>
-      </div>
-      <div class="card">
-        <h3>Database Design Best Practices</h3>
-        <p>Learn how to design efficient and scalable database structures.</p>
-        <a href="#">Read More</a>
-      </div>
-    </div>
-  </section>
-
-  <section id="contact">
-    <h2>Contact Me</h2>
-    <form id="contactForm">
-      <div class="form-group">
-        <input type="text" id="name" name="name" placeholder="Your Name" required />
-        <div class="error-message" id="nameError">Please enter a valid name (letters and spaces only)</div>
+  <main id="main">
+    <section id="about" aria-labelledby="about-heading">
+      <h2 id="about-heading">About Me</h2>
+      <div class="about-content">
+        <p>👋 Hey there! I'm <strong style="color: var(--highlight);">Aakash Chougule</strong>, an enthusiastic and dedicated <strong>ASP.NET Developer</strong> passionate about building modern, responsive web applications.</p>
+        <p>With a solid foundation in <strong>C#, ASP.NET MVC, Web API</strong>, and front-end technologies like <strong>HTML, CSS, JavaScript</strong>, I'm on a mission to turn complex ideas into smooth and efficient digital experiences.</p>
+        <p>I thrive in collaborative environments and love learning new tech. Whether it's developing scalable backend logic or designing intuitive UI, I bring creativity, logic, and attention to detail to every project.</p>
+        <p>🚀 Currently seeking opportunities to grow and contribute to real-world projects while leveling up as a full-stack developer.</p>
       </div>
       
-      <div class="form-group">
-        <input type="email" id="email" name="email" placeholder="Your Email" required />
-        <div class="error-message" id="emailError">Please enter a valid email address</div>
+      <!-- GitHub Contributions -->
+      <div class="github-contributions">
+        <h3>GitHub Contributions</h3>
+        <p>Check out my coding activity and contributions on GitHub:</p>
+        <a href="https://github.com/Aakash-Chougule" target="_blank" class="card a">View GitHub Profile</a>
       </div>
-      
-      <div class="form-group">
-        <textarea id="message" name="message" rows="5" placeholder="Your Message" required></textarea>
-        <div class="error-message" id="messageError">Message cannot be empty</div>
+
+      <div class="social-icons">
+        <a href="https://github.com/Aakash-Chougule" target="_blank" aria-label="GitHub">
+          <i class="fab fa-github"></i>
+        </a>
+        <a href="https://www.linkedin.com/in/aakash-chougule-031524186/" target="_blank" aria-label="LinkedIn">
+          <i class="fab fa-linkedin"></i>
+        </a>
+        <a href="mailto:aakashc549@gmail.com" aria-label="Email">
+          <i class="fas fa-envelope"></i>
+        </a>
+        <a href="https://stackoverflow.com/users/17657836/aakash-chougule" target="_blank" aria-label="Stack Overflow">
+          <i class="fab fa-stack-overflow"></i>
+        </a>
+        <a href="https://www.hackerrank.com/profile/aakashc549" target="_blank" aria-label="HackerRank">
+          <i class="fab fa-hackerrank"></i>
+        </a>
+        <a href="resources/Documents/Aakash_chougule_Resume.pdf" download aria-label="Download CV" id="resumeDownload">
+          <i class="fas fa-file-download"></i>
+        </a>
       </div>
+    </section>
+
+    <section id="experience" aria-labelledby="experience-heading">
+      <h2 id="experience-heading">Experience & Education</h2>
+      <div class="timeline">
+        <!-- Bachelor's Degree - First -->
+        <div class="timeline-item">
+          <div class="timeline-content">
+            <h3>Bachelor's Degree in Computer Science</h3>
+            <p class="timeline-date">2019 - 2023</p>
+            <p>Completed degree with focus on software engineering, web technologies, and database management.</p>
+            <div class="achievement">
+              <i class="fas fa-award"></i>
+              <span>Graduated with First Class Honors</span>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Web Development Intern - Second -->
+        <div class="timeline-item">
+          <div class="timeline-content">
+            <h3>Web Development Intern</h3>
+            <p class="timeline-date">Summer 2022</p>
+            <p>Gained practical experience in front-end development and collaborated on live projects.</p>
+            <div class="achievement">
+              <i class="fas fa-chart-line"></i>
+              <span>Improved website performance by 25%</span>
+            </div>
+          </div>
+        </div>
+        
+        <!-- ASP.NET Developer Training - Third (Current) -->
+        <div class="timeline-item">
+          <div class="timeline-content">
+            <h3>ASP.NET Developer Training</h3>
+            <p class="timeline-date">2023 - Present</p>
+            <p>Intensive training in ASP.NET ecosystem, building real-world projects and applications.</p>
+            <div class="achievement">
+              <i class="fas fa-trophy"></i>
+              <span>Completed 5+ production-ready projects</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="skills" class="skills" aria-labelledby="skills-heading">
+      <h2 id="skills-heading">Skills</h2>
       
-      <button type="submit" id="submitBtn">
-        <span id="buttonText">Send Message</span>
-      </button>
-    </form>
-  </section>
+      <!-- Search Bar -->
+      <div class="search-container">
+        <input type="text" class="search-bar" id="skillSearch" placeholder="Search skills...">
+        <i class="fas fa-search search-icon"></i>
+      </div>
+
+      <div class="skill-list">
+        <div class="skill-box" data-skill="html">
+          <h4>HTML</h4>
+          <div class="bar-container">
+            <div class="bar-fill" data-width="90%"></div>
+          </div>
+          <div class="skill-details">
+            Semantic HTML5, Accessibility, SEO Optimization
+          </div>
+        </div>
+        <div class="skill-box" data-skill="css">
+          <h4>CSS</h4>
+          <div class="bar-container">
+            <div class="bar-fill" data-width="85%"></div>
+          </div>
+          <div class="skill-details">
+            Flexbox, Grid, Animations, Responsive Design
+          </div>
+        </div>
+        <div class="skill-box" data-skill="javascript">
+          <h4>JavaScript</h4>
+          <div class="bar-container">
+            <div class="bar-fill" data-width="80%"></div>
+          </div>
+          <div class="skill-details">
+            ES6+, DOM Manipulation, Async Programming
+          </div>
+        </div>
+        <div class="skill-box" data-skill="csharp">
+          <h4>C#</h4>
+          <div class="bar-container">
+            <div class="bar-fill" data-width="85%"></div>
+          </div>
+          <div class="skill-details">
+            OOP, LINQ, Entity Framework, .NET Core
+          </div>
+        </div>
+        <div class="skill-box" data-skill="aspnet">
+          <h4>ASP.NET (Windows Forms)</h4>
+          <div class="bar-container">
+            <div class="bar-fill" data-width="80%"></div>
+          </div>
+          <div class="skill-details">
+            Desktop Applications, WinForms, Data Binding
+          </div>
+        </div>
+        <div class="skill-box" data-skill="aspnet-web">
+          <h4>ASP.NET (Web Application)</h4>
+          <div class="bar-container">
+            <div class="bar-fill" data-width="80%"></div>
+          </div>
+          <div class="skill-details">
+            Web Forms, Server Controls, State Management
+          </div>
+        </div>
+        <div class="skill-box" data-skill="mvc">
+          <h4>ASP.NET MVC</h4>
+          <div class="bar-container">
+            <div class="bar-fill" data-width="80%"></div>
+          </div>
+          <div class="skill-details">
+            Model-View-Controller, Razor Views, Routing
+          </div>
+        </div>
+        <div class="skill-box" data-skill="webapi">
+          <h4>ASP.NET Web API</h4>
+          <div class="bar-container">
+            <div class="bar-fill" data-width="75%"></div>
+          </div>
+          <div class="skill-details">
+            RESTful APIs, JSON Serialization, HTTP Methods
+          </div>
+        </div>
+        <div class="skill-box" data-skill="sql">
+          <h4>Microsoft SQL</h4>
+          <div class="bar-container">
+            <div class="bar-fill" data-width="75%"></div>
+          </div>
+          <div class="skill-details">
+            T-SQL, Stored Procedures, Database Design
+          </div>
+        </div>
+        <div class="skill-box" data-skill="laravel">
+          <h4>Laravel (MVC)</h4>
+          <div class="bar-container">
+            <div class="bar-fill" data-width="40%"></div>
+          </div>
+          <div class="skill-details">
+            PHP Framework, Eloquent ORM, Blade Templates
+          </div>
+        </div>
+        <div class="skill-box" data-skill="android">
+          <h4>Android (Java)</h4>
+          <div class="bar-container">
+            <div class="bar-fill" data-width="75%"></div>
+          </div>
+          <div class="skill-details">
+            Mobile Development, UI Design, Java Programming
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects" class="projects" aria-labelledby="projects-heading">
+      <h2 id="projects-heading">Projects</h2>
+      
+      <div class="project-filters">
+        <button class="filter-btn active" data-filter="all">All Projects</button>
+        <button class="filter-btn" data-filter="web">Web Apps</button>
+        <button class="filter-btn" data-filter="desktop">Desktop</button>
+        <button class="filter-btn" data-filter="mobile">Mobile</button>
+        <button class="filter-btn" data-filter="api">APIs</button>
+      </div>
+
+      <div class="project-grid">
+        <div class="card" data-category="web">
+          <div class="project-views">
+            <i class="fas fa-eye"></i> <span id="views-inventory">0</span>
+          </div>
+          <img src="resources/images/inventory_managemant.png" alt="Inventory System">
+          <h3>Inventory Management System</h3>
+          <p>ASP.NET based application to manage stock, sales, and purchase</p>
+          <div class="project-tech">
+            <span class="tech-tag">ASP.NET</span>
+            <span class="tech-tag">C#</span>
+            <span class="tech-tag">SQL Server</span>
+            <span class="tech-tag">JavaScript</span>
+          </div>
+          <div class="achievement">
+            <i class="fas fa-trophy"></i>
+            <span>Reduced inventory errors by 60%</span>
+          </div>
+          <a href="https://github.com/Aakash-Chougule/Inventory-Management-System" target="_blank" onclick="trackProjectView('inventory')">View on GitHub</a>
+        </div>
+        <div class="card" data-category="desktop">
+          <div class="project-views">
+            <i class="fas fa-eye"></i> <span id="views-store">0</span>
+          </div>
+          <img src="resources/images/laxmi_traders.png" alt="Store System">
+          <h3>Store Management System (Luxmi Traders)</h3>
+          <p>Windows Forms app for local store inventory and sales management.</p>
+          <div class="project-tech">
+            <span class="tech-tag">Windows Forms</span>
+            <span class="tech-tag">C#</span>
+            <span class="tech-tag">SQL Server</span>
+          </div>
+          <div class="achievement">
+            <i class="fas fa-chart-line"></i>
+            <span>Increased sales tracking efficiency by 40%</span>
+          </div>
+          <a href="https://github.com/Aakash-Chougule/Store-Management-System" target="_blank" onclick="trackProjectView('store')">View on GitHub</a>
+        </div>
+        <div class="card" data-category="web">
+          <div class="project-views">
+            <i class="fas fa-eye"></i> <span id="views-cafe">0</span>
+          </div>
+          <img src="resources/images/cafe_coffee_bean.png" alt="Cafe Coffee Bean Website">
+          <h3>Cafe Coffee Bean Website</h3>
+          <p>HTML, CSS, and JS website for the coffee shop.</p>
+          <div class="project-tech">
+            <span class="tech-tag">HTML5</span>
+            <span class="tech-tag">CSS3</span>
+            <span class="tech-tag">JavaScript</span>
+            <span class="tech-tag">Responsive Design</span>
+          </div>
+          <div class="achievement">
+            <i class="fas fa-mobile-alt"></i>
+            <span>Fully responsive across all devices</span>
+          </div>
+          <a href="https://github.com/Aakash-Chougule/Cafe-Coffee-Bean-Website" target="_blank" onclick="trackProjectView('cafe')">View on GitHub</a>
+        </div>
+        <div class="card" data-category="mobile">
+          <div class="project-views">
+            <i class="fas fa-eye"></i> <span id="views-dilse">0</span>
+          </div>
+          <img src="resources/images/dil_se_connect.png" alt="DilSeConnect Design">
+          <h3>DilSeConnect App Design</h3>
+          <p>UI design for a social connection app using Android Studio (Java).</p>
+          <div class="project-tech">
+            <span class="tech-tag">Android</span>
+            <span class="tech-tag">Java</span>
+            <span class="tech-tag">XML</span>
+            <span class="tech-tag">Material Design</span>
+          </div>
+          <div class="achievement">
+            <i class="fas fa-paint-brush"></i>
+            <span>Implemented modern UI/UX principles</span>
+          </div>
+          <a href="https://github.com/Aakash-Chougule/DilSeConnect-App" target="_blank" onclick="trackProjectView('dilse')">View Details</a>
+        </div>
+        <div class="card" data-category="web">
+          <div class="project-views">
+            <i class="fas fa-eye"></i> <span id="views-vue">0</span>
+          </div>
+          <img src="resources/images/vue_js.png" alt="Website Template">
+          <h3>Vue.js Website Template</h3>
+          <p>Responsive single-page template using Vue.js and Tailwind CSS.</p>
+          <div class="project-tech">
+            <span class="tech-tag">Vue.js</span>
+            <span class="tech-tag">Tailwind CSS</span>
+            <span class="tech-tag">JavaScript</span>
+            <span class="tech-tag">SPA</span>
+          </div>
+          <div class="achievement">
+            <i class="fas fa-rocket"></i>
+            <span>95+ Lighthouse performance score</span>
+          </div>
+          <a href="https://github.com/Aakash-Chougule/Vue.js-Template" target="_blank" onclick="trackProjectView('vue')">View on GitHub</a>
+        </div>
+        <div class="card" data-category="web">
+          <div class="project-views">
+            <i class="fas fa-eye"></i> <span id="views-portfolio">0</span>
+          </div>
+          <img src="resources/images/portfolio.png" alt="Portfolio Website">
+          <h3>Portfolio Website</h3>
+          <p>Fully responsive personal portfolio with dark mode and animations.</p>
+          <div class="project-tech">
+            <span class="tech-tag">HTML5</span>
+            <span class="tech-tag">CSS3</span>
+            <span class="tech-tag">JavaScript</span>
+            <span class="tech-tag">Particles.js</span>
+          </div>
+          <div class="achievement">
+            <i class="fas fa-star"></i>
+            <span>100% accessibility score</span>
+          </div>
+          <a href="https://aakashchougule.com" target="_blank" onclick="trackProjectView('portfolio')">Live Demo</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="blog" aria-labelledby="blog-heading">
+      <h2 id="blog-heading">Latest Articles</h2>
+      <div class="blog-grid">
+        <div class="blog-card">
+          <span class="blog-category">ASP.NET</span>
+          <span class="blog-date">March 15, 2024</span>
+          <h3>Getting Started with ASP.NET Core MVC</h3>
+          <p>A comprehensive beginner's guide to building modern web applications with ASP.NET Core MVC. Learn about the Model-View-Controller pattern, Razor views, and Entity Framework Core.</p>
+          <div class="blog-stats">
+            <span><i class="far fa-clock"></i> 8 min read</span>
+            <span><i class="far fa-eye"></i> 1.2K views</span>
+            <span><i class="far fa-comment"></i> 24 comments</span>
+          </div>
+          <a href="#" class="card a">Read More</a>
+        </div>
+        
+        <div class="blog-card">
+          <span class="blog-category">C# Programming</span>
+          <span class="blog-date">February 28, 2024</span>
+          <h3>Advanced C# Features Every Developer Should Know</h3>
+          <p>Explore powerful C# features like LINQ, async/await, pattern matching, and records that can make your code more efficient and maintainable.</p>
+          <div class="blog-stats">
+            <span><i class="far fa-clock"></i> 12 min read</span>
+            <span><i class="far fa-eye"></i> 2.1K views</span>
+            <span><i class="far fa-comment"></i> 42 comments</span>
+          </div>
+          <a href="#" class="card a">Read More</a>
+        </div>
+        
+        <div class="blog-card">
+          <span class="blog-category">Database</span>
+          <span class="blog-date">February 15, 2024</span>
+          <h3>SQL Server Performance Optimization Tips</h3>
+          <p>Learn essential techniques to optimize your SQL Server queries, including indexing strategies, query execution plans, and best practices for database design.</p>
+          <div class="blog-stats">
+            <span><i class="far fa-clock"></i> 10 min read</span>
+            <span><i class="far fa-eye"></i> 1.8K views</span>
+            <span><i class="far fa-comment"></i> 31 comments</span>
+          </div>
+          <a href="#" class="card a">Read More</a>
+        </div>
+        
+        <div class="blog-card">
+          <span class="blog-category">Web Development</span>
+          <span class="blog-date">January 30, 2024</span>
+          <h3>Building RESTful APIs with ASP.NET Web API</h3>
+          <p>Step-by-step guide to creating robust RESTful APIs using ASP.NET Web API, including authentication, versioning, and documentation with Swagger.</p>
+          <div class="blog-stats">
+            <span><i class="far fa-clock"></i> 15 min read</span>
+            <span><i class="far fa-eye"></i> 2.5K views</span>
+            <span><i class="far fa-comment"></i> 56 comments</span>
+          </div>
+          <a href="#" class="card a">Read More</a>
+        </div>
+        
+        <div class="blog-card">
+          <span class="blog-category">Frontend</span>
+          <span class="blog-date">January 18, 2024</span>
+          <h3>Modern JavaScript ES6+ Features You Should Use</h3>
+          <p>Discover the most useful ES6+ JavaScript features that will make your frontend development more efficient and your code cleaner.</p>
+          <div class="blog-stats">
+            <span><i class="far fa-clock"></i> 9 min read</span>
+            <span><i class="far fa-eye"></i> 1.5K views</span>
+            <span><i class="far fa-comment"></i> 28 comments</span>
+          </div>
+          <a href="#" class="card a">Read More</a>
+        </div>
+        
+        <div class="blog-card">
+          <span class="blog-category">Career</span>
+          <span class="blog-date">January 5, 2024</span>
+          <h3>From Fresher to Professional: My Journey in ASP.NET Development</h3>
+          <p>Sharing my personal journey of learning ASP.NET development, the challenges I faced, and the resources that helped me grow as a developer.</p>
+          <div class="blog-stats">
+            <span><i class="far fa-clock"></i> 7 min read</span>
+            <span><i class="far fa-eye"></i> 3.2K views</span>
+            <span><i class="far fa-comment"></i> 67 comments</span>
+          </div>
+          <a href="#" class="card a">Read More</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" aria-labelledby="contact-heading">
+      <h2 id="contact-heading">Contact Me</h2>
+      <form id="contactForm">
+        <div class="form-group">
+          <input type="text" id="name" name="name" placeholder="Your Name" required />
+          <div class="error-message" id="nameError">Please enter a valid name (letters and spaces only)</div>
+        </div>
+        
+        <div class="form-group">
+          <input type="email" id="email" name="email" placeholder="Your Email" required />
+          <div class="error-message" id="emailError">Please enter a valid email address</div>
+        </div>
+        
+        <div class="form-group">
+          <textarea id="message" name="message" rows="5" placeholder="Your Message" required maxlength="500"></textarea>
+          <div class="char-count" id="charCount">0/500 characters</div>
+          <div class="error-message" id="messageError">Message cannot be empty</div>
+        </div>
+        
+        <button type="submit" id="submitBtn">
+          <span id="buttonText">Send Message</span>
+        </button>
+      </form>
+    </section>
+  </main>
 
   <div id="successPopup">
     <i class="fas fa-check-circle"></i> Your message has been sent successfully!
@@ -1319,12 +1618,16 @@
     <p>Built with ❤️ using HTML, CSS, and JavaScript</p>
   </footer>
 
-  <button id="backToTop" onclick="scrollToTop()">
+  <button id="backToTop" onclick="scrollToTop()" aria-label="Back to top">
     <i class="fas fa-chevron-up"></i>
   </button>
 
+  <!-- Deferred JavaScript -->
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+
   <script>
-    // Enhanced Portfolio JavaScript
+    // Initialize EmailJS
     emailjs.init("2ebBAJBkDrupcL5F7");
 
     // Global Variables
@@ -1337,6 +1640,38 @@
       'portfolio': 0
     };
 
+    // ==================== MOBILE MENU ====================
+    function initMobileMenu() {
+      const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+      const navLinks = document.getElementById('navLinks');
+
+      mobileMenuBtn.addEventListener('click', function() {
+        navLinks.classList.toggle('active');
+        const icon = mobileMenuBtn.querySelector('i');
+        if (navLinks.classList.contains('active')) {
+          icon.className = 'fas fa-times';
+        } else {
+          icon.className = 'fas fa-bars';
+        }
+      });
+
+      // Close menu when clicking on a link
+      document.querySelectorAll('.nav-links a').forEach(link => {
+        link.addEventListener('click', () => {
+          navLinks.classList.remove('active');
+          mobileMenuBtn.querySelector('i').className = 'fas fa-bars';
+        });
+      });
+
+      // Close menu when clicking outside
+      document.addEventListener('click', function(event) {
+        if (!navLinks.contains(event.target) && !mobileMenuBtn.contains(event.target)) {
+          navLinks.classList.remove('active');
+          mobileMenuBtn.querySelector('i').className = 'fas fa-bars';
+        }
+      });
+    }
+
     // ==================== LOADING SCREEN ====================
     window.addEventListener('load', function() {
       const loadingScreen = document.getElementById('loading-screen');
@@ -1344,44 +1679,50 @@
         loadingScreen.style.opacity = '0';
         setTimeout(() => {
           loadingScreen.style.display = 'none';
+          // Initialize heavy features after page is visible
+          initHeavyFeatures();
         }, 500);
-      }, 1500);
+      }, 1000);
     });
 
-    // ==================== PARTICLES.JS ====================
-    particlesJS('particles-js', {
-      particles: {
-        number: { value: 80, density: { enable: true, value_area: 800 } },
-        color: { value: "#3498db" },
-        shape: { type: "circle" },
-        opacity: { value: 0.5, random: true },
-        size: { value: 3, random: true },
-        line_linked: {
-          enable: true,
-          distance: 150,
-          color: "#3498db",
-          opacity: 0.4,
-          width: 1
-        },
-        move: {
-          enable: true,
-          speed: 2,
-          direction: "none",
-          random: true,
-          straight: false,
-          out_mode: "out",
-          bounce: false
-        }
-      },
-      interactivity: {
-        detect_on: "canvas",
-        events: {
-          onhover: { enable: true, mode: "repulse" },
-          onclick: { enable: true, mode: "push" },
-          resize: true
-        }
+    function initHeavyFeatures() {
+      // Initialize particles with reduced complexity for performance
+      if (typeof particlesJS !== 'undefined') {
+        particlesJS('particles-js', {
+          particles: {
+            number: { value: 50, density: { enable: true, value_area: 800 } },
+            color: { value: "#3498db" },
+            shape: { type: "circle" },
+            opacity: { value: 0.5, random: true },
+            size: { value: 3, random: true },
+            line_linked: {
+              enable: true,
+              distance: 150,
+              color: "#3498db",
+              opacity: 0.4,
+              width: 1
+            },
+            move: {
+              enable: true,
+              speed: 2,
+              direction: "none",
+              random: true,
+              straight: false,
+              out_mode: "out",
+              bounce: false
+            }
+          },
+          interactivity: {
+            detect_on: "canvas",
+            events: {
+              onhover: { enable: true, mode: "repulse" },
+              onclick: { enable: true, mode: "push" },
+              resize: true
+            }
+          }
+        });
       }
-    });
+    }
 
     // ==================== TYPING ANIMATION ====================
     function initTypingAnimation() {
@@ -1524,12 +1865,6 @@
       icon.className = isLightMode ? 'fas fa-moon' : 'fas fa-sun';
     }
 
-    // ==================== LANGUAGE SWITCHER ====================
-    function toggleLanguage() {
-      // This is a placeholder for multi-language support
-      alert('Multi-language support coming soon!');
-    }
-
     // ==================== PROFILE PIC ANIMATION ====================
     function animateProfilePic() {
       const profilePic = document.querySelector('.profile-pic');
@@ -1545,10 +1880,6 @@
         anchor.addEventListener('click', function (e) {
           e.preventDefault();
           const targetId = this.getAttribute('href');
-          if (targetId === '#blog') {
-            alert('Blog section coming soon!');
-            return;
-          }
           const targetSection = document.querySelector(targetId);
           const headerHeight = document.querySelector('nav').offsetHeight;
           
@@ -1646,63 +1977,81 @@
     }
 
     // Real-time validation
-    ['name', 'email', 'message'].forEach(fieldId => {
-      const field = document.getElementById(fieldId);
-      field.addEventListener('input', () => {
-        const group = field.closest('.form-group');
+    function initFormValidation() {
+      // Character counter for message
+      const messageField = document.getElementById('message');
+      const charCount = document.getElementById('charCount');
+      
+      messageField.addEventListener('input', () => {
+        const count = messageField.value.length;
+        charCount.textContent = `${count}/500 characters`;
+        
+        const group = messageField.closest('.form-group');
         group.classList.remove('error', 'success');
       });
-    });
+
+      // Real-time validation for other fields
+      ['name', 'email'].forEach(fieldId => {
+        const field = document.getElementById(fieldId);
+        field.addEventListener('input', () => {
+          const group = field.closest('.form-group');
+          group.classList.remove('error', 'success');
+        });
+      });
+    }
 
     // ==================== FORM SUBMISSION ====================
-    document.getElementById('contactForm').addEventListener('submit', function(event) {
-      event.preventDefault();
-      
-      if (!validateForm()) {
-        return;
-      }
-      
-      const submitBtn = document.getElementById('submitBtn');
-      const buttonText = document.getElementById('buttonText');
-      
-      submitBtn.disabled = true;
-      buttonText.innerHTML = '<i class="fas fa-spinner spinner"></i> Sending...';
-      
-      const now = new Date();
-      const date = now.toLocaleDateString();
-      const time = now.toLocaleTimeString();
-      
-      const templateParams = {
-        from_name: document.getElementById('name').value.trim(),
-        from_email: document.getElementById('email').value.trim(),
-        message: document.getElementById('message').value.trim(),
-        date: date,
-        time: time
-      };
-      
-      emailjs.send('service_ih91v8z', 'template_9ll2uuk', templateParams)
-        .then(function(response) {
-          console.log('SUCCESS!', response.status, response.text);
-          
-          document.getElementById('contactForm').reset();
-          document.querySelectorAll('.form-group').forEach(group => {
-            group.classList.remove('success');
+    function initFormSubmission() {
+      document.getElementById('contactForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        
+        if (!validateForm()) {
+          return;
+        }
+        
+        const submitBtn = document.getElementById('submitBtn');
+        const buttonText = document.getElementById('buttonText');
+        
+        submitBtn.disabled = true;
+        buttonText.innerHTML = '<i class="fas fa-spinner spinner"></i> Sending...';
+        
+        const now = new Date();
+        const date = now.toLocaleDateString();
+        const time = now.toLocaleTimeString();
+        
+        const templateParams = {
+          from_name: document.getElementById('name').value.trim(),
+          from_email: document.getElementById('email').value.trim(),
+          message: document.getElementById('message').value.trim(),
+          date: date,
+          time: time
+        };
+        
+        emailjs.send('service_ih91v8z', 'template_9ll2uuk', templateParams)
+          .then(function(response) {
+            console.log('SUCCESS!', response.status, response.text);
+            
+            document.getElementById('contactForm').reset();
+            document.getElementById('charCount').textContent = '0/500 characters';
+            document.querySelectorAll('.form-group').forEach(group => {
+              group.classList.remove('success');
+            });
+            
+            document.getElementById('successPopup').style.display = 'block';
+            setTimeout(function() {
+              document.getElementById('successPopup').style.display = 'none';
+            }, 3000);
+          })
+          .catch(function(error) {
+            console.log('FAILED...', error);
+            alert('Sorry, there was an error sending your message. Please try again later.');
+          })
+          .finally(function() {
+            submitBtn.disabled = false;
+            buttonText.innerHTML = 'Send Message';
           });
-          
-          document.getElementById('successPopup').style.display = 'block';
-          setTimeout(function() {
-            document.getElementById('successPopup').style.display = 'none';
-          }, 3000);
-        })
-        .catch(function(error) {
-          console.log('FAILED...', error);
-          alert('Sorry, there was an error sending your message. Please try again later.');
-        })
-        .finally(function() {
-          submitBtn.disabled = false;
-          buttonText.innerHTML = 'Send Message';
-        });
-    });
+      });
+    }
 
     // ==================== SCROLL ANIMATIONS ====================
     function showSectionOnScroll() {
@@ -1746,6 +2095,7 @@
       updateThemeIcon(document.body.classList.contains('light-mode'));
       
       // Initialize features
+      initMobileMenu();
       initTypingAnimation();
       animateCounters();
       loadProjectViews();
@@ -1753,8 +2103,10 @@
       initSkillDetails();
       initSmoothScroll();
       initProjectFilters();
+      initFormValidation();
+      initFormSubmission();
       
-      console.log('Enhanced Portfolio loaded successfully!');
+      console.log('Portfolio loaded successfully!');
     });
 
     // Event Listeners
